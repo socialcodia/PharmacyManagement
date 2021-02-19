@@ -85,10 +85,10 @@
                       </table>
                       <div class="row green lighten-4">
                           <div class="col l6 m6 s6 center">
-                            <h5>Total Price = <span class="blue-text" style="font-weight: bold"><?php echo $totalEndPrice; ?></span></h5>
+                            <h5>Total Price = <span class="blue-text" style="font-weight: bold"><?php echo number_format($totalEndPrice); ?></span></h5>
                           </div>
                           <div class="col l6 m6 s6 center">
-                            <h5>Total Sell Price = <span class="blue-text" style="font-weight: bold"><?php echo $totalEndSellPrice; ?></span></h5>
+                            <h5>Total Sell Price = <span class="blue-text" style="font-weight: bold"><?php echo number_format($totalEndSellPrice); ?></span></h5>
                           </div>
                         </div>
                      </div>

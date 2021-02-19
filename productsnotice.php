@@ -43,8 +43,11 @@
                           <tr>
                             <?php
                             $count = 1;
+                            $totalAmountOfAllProduct = 0;
                               foreach ($products as $product)
                               {
+                                $totalAmountOfSingleProduct = $product->productQuantity*$product->productPrice;
+                                $totalAmountOfAllProduct = $totalAmountOfAllProduct+$totalAmountOfSingleProduct;
                                 echo "<tr>";
                                 echo "<td>$count</td>";
                                 echo "<td>$product->productCategory</td>";
@@ -63,6 +66,11 @@
                           </tr>
                         </tbody>
                     </table>
+                      <div class="row green lighten-4">
+                        <div class="col l12 m12 s12 center">
+                          <h5>Total Price = <span class="blue-text" style="font-weight: bold"><?php echo number_format($totalAmountOfAllProduct); ?></span></h5>
+                        </div>
+                      </div>
                      </div>
                 </div>
             </div>

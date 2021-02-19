@@ -1826,7 +1826,6 @@ JSON.stringifyIfObject = function stringifyIfObject(obj){
       let viewSellerAddress = document.getElementById('viewSellerAddress');
       let viewSellerContact = document.getElementById('viewSellerContact');
       let sellerProfileImage = document.getElementById('sellerProfileImage');
-      // let inputInvoiceNumber = document.getElementById('inputInvoiceNumber');
       let selectSeller = document.getElementById('selectSeller');
       let invoiceNumber = inputInvoiceNumber.value;
       btnRemSeller.classList.add('disabled');
