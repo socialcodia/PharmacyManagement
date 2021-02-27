@@ -61,9 +61,11 @@
     else if(endPathname=='dashboard')
     {
       getSalesStatusByMonth();
+      getSellerSalesStatusByMonth();
       getSalesStatusByDays();
       chartTopProductsRecord();
-    }
+      chartTopProductsRecordYearly();
+    } 
   });
 
   function previewSellerImage(input) {
@@ -459,9 +461,53 @@ JSON.stringifyIfObject = function stringifyIfObject(obj){
                     datasets: [{
                         label: ['Monthly Sales'],
                         data: data,
-                        backgroundColor: ['red','blue','green','yellow','orange','lime'],
-                        borderColor: ['black','black','black','black','black','black',],
-                        borderWidth: 3
+                        backgroundColor: '#3e95cd'
+                    }]
+                }
+            });
+          }
+          else
+          {
+            makeToast('error',response.message);
+          }
+        }
+      });
+  }
+
+  function getSellerSalesStatusByMonth()
+  {
+    let ctx = document.getElementById('chatSellerSalesRecordOfMonths').getContext('2d');
+    $.ajax({
+        headers:{  
+           'token':token
+        },
+        type:"get",
+        url:BASE_URL+"seller/sales/status/months",
+        success:function(response)
+        {
+          console.log(response);
+          if(!response.error)
+          {
+            let status = response.status;
+            console.log(status);
+            console.log('status');
+            let labels = status.map((e)=>{
+              return e.month;
+            });
+
+            let data = status.map((e)=>
+            {
+              return e.totalSales;
+            });
+            let chatSellerSalesRecordOfMonths = new Chart(ctx, {
+                type: 'line',
+                data: {
+                    labels: labels,
+                    datasets: [{
+                        label: ['Monthly Sales To Seller'],
+                        data: data,
+                        backgroundColor: "#3e95cd",
+                        borderColor: ['black','black','black','black','black','black',]
                     }]
                 }
             });
@@ -504,11 +550,54 @@ JSON.stringifyIfObject = function stringifyIfObject(obj){
                 data: {
                     labels: labels,
                     datasets: [{
-                        label: ['TOP 10 Selling Products'],
+                        label: ['TOP 10 Selling Products Of This Month'],
                         data: data,
-                        backgroundColor: ['red','blue','green','yellow','orange','lime'],
-                        borderColor: ['black','black','black','black','black','black',],
-                        borderWidth: 3
+                        backgroundColor: ["#3e95cd", "#8e5ea2","#3cba9f","#e8c3b9","#c45850"],
+                        borderColor: ['black','black','black','black','black','black',]
+                    }]
+                }
+            });
+          }
+          else
+            makeToast('error',response.message);
+        }
+      });
+  }
+
+  function chartTopProductsRecordYearly()
+  {
+    let ctx = document.getElementById('chartTopProductsRecordYearly').getContext('2d');
+    $.ajax({
+        headers:{  
+           'token':token
+        },
+        type:"get",
+        url:BASE_URL+"sales/status/products/yearly",
+        success:function(response)
+        {
+          console.log(response);
+          if(!response.error)
+          {
+            let products = response.products;
+            console.log(products);
+            let labels = products.map((e)=>{
+              // return e.productName+' | '+e.productSize;
+              return e.productName;
+            });
+
+            let data = products.map((e)=>
+            {
+              return e.sellQuantity;
+            });
+            let chartTopProductsRecordYearly = new Chart(ctx, {
+                type: 'bar',
+                data: {
+                    labels: labels,
+                    datasets: [{
+                        label: ['TOP 10 Selling Products Of This Year'],
+                        data: data,
+                        backgroundColor: ["#3e95cd", "#8e5ea2","#3cba9f","#e8c3b9","#c45850"],
+                        borderColor: ['black','black','black','black','black','black',]
                     }]
                 }
             });
@@ -550,9 +639,7 @@ JSON.stringifyIfObject = function stringifyIfObject(obj){
                     datasets: [{
                         label: ['Daily Sales'],
                         data: data,
-                        backgroundColor: ['red','blue','green','yellow','orange','lime'],
-                        borderColor: ['black','black','black','black','black','black',],
-                        borderWidth: 3
+                        backgroundColor: "#3e95cd"
                     }]
                 }
             });

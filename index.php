@@ -28,7 +28,7 @@
 ?>
     <div class="row">
         <div class="col l4 offset-l4 m6 offset-m3 s12">
-            <div class="card hoverable" style="border-radius: 20px; border: 10px ridge #9ea0a2; padding: 10px; margin-top: 160px; opacity: 2">
+            <div class="card hoverable" style="border-radius: 20px; border: 12px ridge #9ea0a2; padding: 10px; margin-top: 155px; opacity: 2">
                 <div class="card-content">
                     <h5 style="font-weight: bold;">Login</h5>
                     <p class="grey-text" style=" margin-bottom: 30px;">Login into your account to continue...</p>
