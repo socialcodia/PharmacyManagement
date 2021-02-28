@@ -65,6 +65,8 @@
       getSalesStatusByDays();
       chartTopProductsRecord();
       chartTopProductsRecordYearly();
+      setTopTenSellersMonthly();
+      setTopTenSellersYearly();
     } 
   });
 
@@ -187,156 +189,156 @@ function getToken() {
   }
   let arraySalesId = new Array();
 
-  function sellOnCredit()
+function sellOnCredit()
+{
+  arraySalesId = [];
+  let table = document.getElementById('mstrTable');
+  let count = 1;
+  let SellRecordTableBody = document.getElementById('SellRecordTableBody');
+  let SellOnCreditTableBody = document.getElementById('SellOnCreditTableBody');
+  let htmlTotalPrice = document.getElementById('htmlTotalPrice');
+  let htmlDiscountPrice = document.getElementById('htmlDiscountPrice');
+  let htmlCreditDiscountPrice = document.getElementById('htmlCreditDiscountPrice');
+  let htmlCreditTotalPrice = document.getElementById('htmlCreditTotalPrice');
+  let childrenLength = SellRecordTableBody.children.length;
+  if (childrenLength>0)
+    openSellOnCreditModal();
+  else
+    makeToast('error','Sale Record Is Empty')
+  SellOnCreditTableBody.innerHTML = '';
+  for(let i=0; i<childrenLength; i++)
   {
-    arraySalesId = [];
-    let table = document.getElementById('mstrTable');
-    let count = 1;
-    let SellRecordTableBody = document.getElementById('SellRecordTableBody');
-    let SellOnCreditTableBody = document.getElementById('SellOnCreditTableBody');
-    let htmlTotalPrice = document.getElementById('htmlTotalPrice');
-    let htmlDiscountPrice = document.getElementById('htmlDiscountPrice');
-    let htmlCreditDiscountPrice = document.getElementById('htmlCreditDiscountPrice');
-    let htmlCreditTotalPrice = document.getElementById('htmlCreditTotalPrice');
-    let childrenLength = SellRecordTableBody.children.length;
-    if (childrenLength>0)
-      openSellOnCreditModal();
-    else
-      makeToast('error','Sale Record Is Empty')
-    SellOnCreditTableBody.innerHTML = '';
-    for(let i=0; i<childrenLength; i++)
-    {
-      let items = SellRecordTableBody.rows[i];
-      let tr = document.createElement('tr');
-      let saleId = items.cells[1].firstElementChild.value;
-      arraySalesId[i] = saleId;
-      let productName = items.cells[2].innerHTML;
-      let productSize = items.cells[3].innerHTML;
-      let productPrice = items.cells[4].innerHTML;
-      let productQuantity = items.cells[5].firstElementChild.value;
-      let productSellPrice = items.cells[9].firstElementChild.value;
-      let productBrand = items.cells[10].innerHTML;
-      let tdSaleId = '<td>'+count+'</td>'
-      let tdProductName = '<td>'+productName+'</td>'
-      let tdProductSize = '<td>'+productSize+'</td>'
-      let tdProductPrice = '<td>'+productPrice+'</td>'
-      let tdProductQuantity = '<td>'+productQuantity+'</td>'
-      let tdProductSellPrice = '<td>'+productSellPrice+'</td>'
-      let tdProductBrand = '<td>'+productBrand+'</td>'
-      tr.innerHTML = tdSaleId+tdProductName+tdProductSize+tdProductPrice+tdProductQuantity+tdProductSellPrice+tdProductBrand;
-      SellOnCreditTableBody.append(tr);
-      count++;
-    }
-      htmlCreditDiscountPrice.innerHTML = htmlDiscountPrice.innerHTML;
-      creditPaidAmountChangeEvent();
+    let items = SellRecordTableBody.rows[i];
+    let tr = document.createElement('tr');
+    let saleId = items.cells[1].firstElementChild.value;
+    arraySalesId[i] = saleId;
+    let productName = items.cells[2].innerHTML;
+    let productSize = items.cells[3].innerHTML;
+    let productPrice = items.cells[4].innerHTML;
+    let productQuantity = items.cells[5].firstElementChild.value;
+    let productSellPrice = items.cells[9].firstElementChild.value;
+    let productBrand = items.cells[10].innerHTML;
+    let tdSaleId = '<td>'+count+'</td>'
+    let tdProductName = '<td>'+productName+'</td>'
+    let tdProductSize = '<td>'+productSize+'</td>'
+    let tdProductPrice = '<td>'+productPrice+'</td>'
+    let tdProductQuantity = '<td>'+productQuantity+'</td>'
+    let tdProductSellPrice = '<td>'+productSellPrice+'</td>'
+    let tdProductBrand = '<td>'+productBrand+'</td>'
+    tr.innerHTML = tdSaleId+tdProductName+tdProductSize+tdProductPrice+tdProductQuantity+tdProductSellPrice+tdProductBrand;
+    SellOnCreditTableBody.append(tr);
+    count++;
   }
+    htmlCreditDiscountPrice.innerHTML = htmlDiscountPrice.innerHTML;
+    creditPaidAmountChangeEvent();
+}
 
-   function alertSellOnCredit()
-    {
-      let paidAmount = document.getElementById('paidAmount');
-      let creditorName = document.getElementById('creditorName');
-      let creditDate = document.getElementById('creditDate');
-      let crName = document.getElementById('customerName');
-      let crMobile = document.getElementById('customerMobile');
-      let crAddress = document.getElementById('customerAddress');
-      let name = crName.value;
-      let mobile = crMobile.value;
-      let address = crAddress.value;
-      let amount = paidAmount.value;
-      console.log(arraySalesId);
-      if (name=='' || name.length<3)
-      {
-        makeToast('error','Enter Name');
-        return;
-      }
-      if (mobile.length=='') 
-      {
-        makeToast('error','Enter Mobile Number');
-        return;
-      }
-      if (address.length<3)
-      {
-        makeToast('error','Enter Address');
-        return;
-      }
-      if (mobile.length!=10) 
-      {
-        makeToast('error','Enter Valid Mobile Number');
-        return;
-      }
-      let text = "<b>You are going to add a credit record for <span class='blue-text'>"+name+"</span> which is paying you <h4 style='font-weight:bold; color:red'>"+amount+' Rupees'+"</h4> For this credit record</b>";
-          Swal.fire({
-            icon: 'warning',
-            title: 'Are you sure?',
-            showCancelButton: true,
-            confirmButtonText: `Accept Payment`,
-            denyButtonText: `Cancel Payment`,
-            html: text
-          }).then((result) => {
-          if (result.isConfirmed) 
-          {
-            sellOnCreditDB();
-          }
-          });
-    }
-
-  function sellOnCreditDB()
+function alertSellOnCredit()
+{
+  let paidAmount = document.getElementById('paidAmount');
+  let creditorName = document.getElementById('creditorName');
+  let creditDate = document.getElementById('creditDate');
+  let crName = document.getElementById('customerName');
+  let crMobile = document.getElementById('customerMobile');
+  let crAddress = document.getElementById('customerAddress');
+  let name = crName.value;
+  let mobile = crMobile.value;
+  let address = crAddress.value;
+  let amount = paidAmount.value;
+  console.log(arraySalesId);
+  if (name=='' || name.length<3)
   {
-    let crName = document.getElementById('customerName');
-    let crMobile = document.getElementById('customerMobile');
-    let crAddress = document.getElementById('customerAddress');
-    let paidAmount = document.getElementById('paidAmount');
-    let crDesc = document.getElementById('customerDescription');
-    let btnSellOnCredit = document.getElementById('btnSellOnCredit');
-
-    let name = crName.value;
-    let mobile = crMobile.value;
-    let address = crAddress.value;
-    let amount = paidAmount.value;
-    let desc = crDesc.value;
-    arraySalesId = JSON.stringifyIfObject(arraySalesId);
-
-    btnSellOnCredit.classList.add('disabled');
-    $.ajax({
-        headers:{  
-           'token':token
-        },
-        type:"post",
-        url:BASE_URL+"product/sell/credit",
-        data: 
-        {  
-           'creditorName' : name,
-           'creditorMobile' : mobile,
-           'creditorAddress' : address,
-           'paidAmount' : amount,
-           'creditDescription' : desc,
-           'salesId' : arraySalesId
-        },
-        success:function(response)
-        {
-          let desc = 'You have added '+amount+' Rupees';
-          console.log(response);
-          if (!response.error)
-          {
-            closeSellOnCreditModal();
-            playSuccess();
-            Swal.fire(
-              'Credit Added',
-               desc,
-              'success'
-            )
-            btnSellOnCredit.classList.add('disabled');
-          }
-          else
-          {
-            makeToast('error',response.message);
-            btnSellOnCredit.classList.remove('disabled');
-          }
-        }
+    makeToast('error','Enter Name');
+    return;
+  }
+  if (mobile.length=='') 
+  {
+    makeToast('error','Enter Mobile Number');
+    return;
+  }
+  if (address.length<3)
+  {
+    makeToast('error','Enter Address');
+    return;
+  }
+  if (mobile.length!=10) 
+  {
+    makeToast('error','Enter Valid Mobile Number');
+    return;
+  }
+  let text = "<b>You are going to add a credit record for <span class='blue-text'>"+name+"</span> which is paying you <h4 style='font-weight:bold; color:red'>"+amount+' Rupees'+"</h4> For this credit record</b>";
+      Swal.fire({
+        icon: 'warning',
+        title: 'Are you sure?',
+        showCancelButton: true,
+        confirmButtonText: `Accept Payment`,
+        denyButtonText: `Cancel Payment`,
+        html: text
+      }).then((result) => {
+      if (result.isConfirmed) 
+      {
+        sellOnCreditDB();
+      }
       });
-            btnSellOnCredit.classList.remove('disabled');
+}
 
-  }
+function sellOnCreditDB()
+{
+  let crName = document.getElementById('customerName');
+  let crMobile = document.getElementById('customerMobile');
+  let crAddress = document.getElementById('customerAddress');
+  let paidAmount = document.getElementById('paidAmount');
+  let crDesc = document.getElementById('customerDescription');
+  let btnSellOnCredit = document.getElementById('btnSellOnCredit');
+
+  let name = crName.value;
+  let mobile = crMobile.value;
+  let address = crAddress.value;
+  let amount = paidAmount.value;
+  let desc = crDesc.value;
+  arraySalesId = JSON.stringifyIfObject(arraySalesId);
+
+  btnSellOnCredit.classList.add('disabled');
+  $.ajax({
+      headers:{  
+         'token':token
+      },
+      type:"post",
+      url:BASE_URL+"product/sell/credit",
+      data: 
+      {  
+         'creditorName' : name,
+         'creditorMobile' : mobile,
+         'creditorAddress' : address,
+         'paidAmount' : amount,
+         'creditDescription' : desc,
+         'salesId' : arraySalesId
+      },
+      success:function(response)
+      {
+        let desc = 'You have added '+amount+' Rupees';
+        console.log(response);
+        if (!response.error)
+        {
+          closeSellOnCreditModal();
+          playSuccess();
+          Swal.fire(
+            'Credit Added',
+             desc,
+            'success'
+          )
+          btnSellOnCredit.classList.add('disabled');
+        }
+        else
+        {
+          makeToast('error',response.message);
+          btnSellOnCredit.classList.remove('disabled');
+        }
+      }
+    });
+          btnSellOnCredit.classList.remove('disabled');
+
+}
 
 JSON.stringifyIfObject = function stringifyIfObject(obj){
     if(typeof obj == "object")
@@ -551,6 +553,93 @@ JSON.stringifyIfObject = function stringifyIfObject(obj){
                     labels: labels,
                     datasets: [{
                         label: ['TOP 10 Selling Products Of This Month'],
+                        data: data,
+                        backgroundColor: ["#3e95cd", "#8e5ea2","#3cba9f","#e8c3b9","#c45850"],
+                        borderColor: ['black','black','black','black','black','black',]
+                    }]
+                }
+            });
+          }
+          else
+            makeToast('error',response.message);
+        }
+      });
+  }
+
+  function setTopTenSellersMonthly()
+  {
+    let ctx = document.getElementById('chartTopTenSellersMonthly').getContext('2d');
+    $.ajax({
+        headers:{  
+           'token':token
+        },
+        type:"get",
+        url:BASE_URL+"sellers/top/monthly",
+        success:function(response)
+        {
+          console.log(response);
+          if(!response.error)
+          {
+            let sellers = response.sellers;
+            let labels = sellers.map((e)=>{
+              return e.sellerFirstName+' '+e.sellerLastName;
+            });
+
+            let data = sellers.map((e)=>
+            {
+              return e.sales;
+            });
+
+            let chartTopTenSellersMonthly = new Chart(ctx, {
+                type: 'bar',
+                data: {
+                    labels: labels,
+                    datasets: [{
+                        label: ['Top Ten Sellers Of This Month'],
+                        data: data,
+                        backgroundColor: ["#3e95cd", "#8e5ea2","#3cba9f","#e8c3b9","#c45850"],
+                        borderColor: ['black','black','black','black','black','black',]
+                    }]
+                }
+            });
+          }
+          else
+            makeToast('error',response.message);
+        }
+      });
+  }
+
+  function setTopTenSellersYearly()
+  {
+    let ctx = document.getElementById('chartTopTenSellersYearly').getContext('2d');
+    $.ajax({
+        headers:{  
+           'token':token
+        },
+        type:"get",
+        url:BASE_URL+"sellers/top/yearly",
+        success:function(response)
+        {
+          console.log(response);
+          console.log('response');
+          if(!response.error)
+          {
+            let sellers = response.sellers;
+            let labels = sellers.map((e)=>{
+              return e.sellerFirstName+' '+e.sellerLastName;
+            });
+
+            let data = sellers.map((e)=>
+            {
+              return e.sales;
+            });
+            console.log(labels);
+            let chartTopTenSellersYearly = new Chart(ctx, {
+                type: 'bar',
+                data: {
+                    labels: labels,
+                    datasets: [{
+                        label: ['Top Ten Sellers Of This Year'],
                         data: data,
                         backgroundColor: ["#3e95cd", "#8e5ea2","#3cba9f","#e8c3b9","#c45850"],
                         borderColor: ['black','black','black','black','black','black',]
