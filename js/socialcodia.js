@@ -67,6 +67,10 @@
       chartTopProductsRecordYearly();
       setTopTenSellersMonthly();
       setTopTenSellersYearly();
+    }
+    else if (endPathname == 'seller1.php')
+    {
+      setSellerIncome();
     } 
   });
 
@@ -727,6 +731,48 @@ JSON.stringifyIfObject = function stringifyIfObject(obj){
                     labels: labels,
                     datasets: [{
                         label: ['Daily Sales'],
+                        data: data,
+                        backgroundColor: "#3e95cd"
+                    }]
+                }
+            });
+          }
+          else
+            makeToast('error',response.message);
+        }
+      });
+  }
+
+  function setSellerIncome()
+  {
+    let ctx = document.getElementById('chartSellerIncome').getContext('2d');
+    $.ajax({
+        headers:{  
+           'token':token
+        },
+        type:"get",
+        url:BASE_URL+"/seller/2/income",
+        success:function(response)
+        {
+          console.log(response);
+          if(!response.error)
+          {
+            let incomes = response.incomes;
+            console.log(incomes);
+            let labels = incomes.map((e)=>{
+              return e.monthName;
+            });
+
+            let data = incomes.map((e)=>
+            {
+              return e.netProfit;
+            });
+            let chartSellerIncome = new Chart(ctx, {
+                type: 'line',
+                data: {
+                    labels: labels,
+                    datasets: [{
+                        label: ['Seller Income'],
                         data: data,
                         backgroundColor: "#3e95cd"
                     }]

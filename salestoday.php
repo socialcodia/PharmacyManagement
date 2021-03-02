@@ -36,6 +36,7 @@
                               <th>Price</th>
                               <th>Quantity</th>
                               <th>Total Price</th>
+                              <th>Discount</th>
                               <th>Sale Price</th>
                               <th>Brand</th>
                               <th>Manufacture</th>
@@ -66,6 +67,7 @@
                                 echo "<td>$product->productPrice</td>";
                                 echo "<td>$product->saleQuanitty</td>";
                                 echo "<td class='blue-text darken-4'>$totalPrice</td>";
+                                echo "<td>$product->saleDiscount% </td>";
                                 echo "<td>$product->salePrice </td>";
                                 echo "<td class='blue-text darken-4'>$product->productBrand</td>";
                                 echo "<td>$product->productManufacture</td>";
