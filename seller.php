@@ -22,29 +22,38 @@
     $seller = $sellerResponse->seller;
   ?>
   
-    <div class="socialcodia" style="margin-top: -30px">
+    <div class="socialcodia" >
         <div class="row">
-            <div class="col l12 s12 m12" style="padding: 30px 10px 30px 10px;">
-                <div class="card z-depth-0 ">
-                    <div class="card-content deep-purple lighten-3">
-                        <div class="row" style="margin-bottom: -10px;">
-                            <div class="col l2 m2 s12">
-                                <img src="<?php echo $seller->sellerImage; ?>" class="responsive-img circle z-depth-3" style="border:3px solid white; width: 150px" >
-                            </div>
-                            <div class="col l10 m10 s12">
-                                <table style="font-weight: bold" class="striped">
-                                    <tr class="hoverable">
-                                        <th>NAME :</th><td id="sellerName"><?php echo $seller->sellerFirstName.' '.$seller->sellerLastName; ?></td>
-                                        <th>Contact :</th><td><?php echo $seller->sellerContactNumber; ?></td>
-                                    </tr>
-                                    <tr class="hoverable">
-                                        <th>ADDRESS :</th><td><?php echo $seller->sellerAddress; ?></td>
-                                    </tr>
-                                </table>
-                            </div>
-                        </div>
+            <div class="col s12 l6 m6">
+                 <div class="card lighten-2 dark-text z-depth-0  light-white darken-1" style="min-height: 518px; border: 10px ridge #0288d1;" >
+                    <img src="src/img/d_cover.jpg" alt="" class="responsive-img">
+                  <div class="card-content center">
+                    <img src="<?php echo $seller->sellerImage; ?>" alt="" class="responsive-img circle z-depth-2" style="width: 140px; border: 3px solid white; margin-top: -108px; max-height: 140px; max-width: 140px;">
+                        <h5 class="center"><?php echo $seller->sellerFirstName.' '.$seller->sellerLastName; ?></h5>
+                        <div class="divider"></div>
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th>Contact</th>
+                                    <td class="dark-text"><?php echo $seller->sellerContactNumber; ?></td>
+                                </tr>
+                                <tr>
+                                    <th>Contact 1</th>
+                                    <td class="dark-text"><?php echo $seller->sellerContactNumber1; ?></td>
+                                </tr>
+                                <tr>
+                                    <th>Address</th>
+                                    <td class="dark-text"><?php echo $seller->sellerAddress; ?></td>
+                                </tr>
+                            </thead>
+                        </table>
                     </div>
                 </div>
+              </div>
+              <div class="col s12 l6 m6 card z-depth-0" >
+                    <canvas id="chartSellerIncome" width="400" height="400"></canvas>
+              </div>
+            <div class="col l12 s12 m12" style="padding: 30px 10px 30px 10px;">
                     <div id="productList">
                          <div class="card z-depth-0">
                             <table id="mstrTable" class="highlight responsive-table ">

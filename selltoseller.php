@@ -73,8 +73,8 @@ tr.highlighted td {
                         <th>Action</th>
                     </tr>
                   </thead>
-                  <tbody id="SellRecordTableBody" style="font-weight: bold;">
                     <input class="hide" type="hidden" id="inputInvoiceNumber">
+                  <tbody id="SellRecordTableBody" style="font-weight: bold;">
   				        </tbody>
                 </table>
   	        </div>

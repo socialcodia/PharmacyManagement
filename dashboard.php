@@ -108,17 +108,17 @@
                     <canvas id="chartTopProductsRecordYearly" width="400" height="400"></canvas>
                 </div>
             </div>
-            <div class="col l6 m6 s12">
+            <div class="col l4 m4 s12">
                 <div class="card z-depth-0">
                     <canvas id="chartTopTenSellersMonthly" width="400" height="400"></canvas>
                 </div>
             </div>
-            <div class="col l6 m6 s12">
+            <div class="col l4 m4 s12">
                 <div class="card z-depth-0">
                     <canvas id="chartTopTenSellersYearly" width="400" height="400"></canvas>
                 </div>
             </div>
-            <div class="col l12 m12 s12">
+            <div class="col l4 m4 s12">
                 <div class="card z-depth-0">
                     <canvas id="chatSellerSalesRecordOfMonths" width="400" height="400"></canvas>
                 </div>

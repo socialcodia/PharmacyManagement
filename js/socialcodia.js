@@ -68,7 +68,7 @@
       setTopTenSellersMonthly();
       setTopTenSellersYearly();
     }
-    else if (endPathname == 'seller1.php')
+    else if (endPathname == 'seller')
     {
       setSellerIncome();
     } 
@@ -745,13 +745,15 @@ JSON.stringifyIfObject = function stringifyIfObject(obj){
 
   function setSellerIncome()
   {
+    let url = new URL(window.location.href);
+    var sellerId = url.searchParams.get('sid');
     let ctx = document.getElementById('chartSellerIncome').getContext('2d');
     $.ajax({
         headers:{  
            'token':token
         },
         type:"get",
-        url:BASE_URL+"/seller/2/income",
+        url:BASE_URL+"seller/"+sellerId+"/income",
         success:function(response)
         {
           console.log(response);
@@ -767,13 +769,22 @@ JSON.stringifyIfObject = function stringifyIfObject(obj){
             {
               return e.netProfit;
             });
+
+            let data1 = incomes.map((e)=>
+            {
+              return e.maxProfit;
+            });
             let chartSellerIncome = new Chart(ctx, {
-                type: 'line',
+                type: 'bar',
                 data: {
                     labels: labels,
                     datasets: [{
-                        label: ['Seller Income'],
+                        label: ['Min Income'],
                         data: data,
+                        backgroundColor: "red"
+                    },{
+                        label: ['Max Income'],
+                        data: data1,
                         backgroundColor: "#3e95cd"
                     }]
                 }
@@ -2049,6 +2060,7 @@ JSON.stringifyIfObject = function stringifyIfObject(obj){
       let viewSellerContact = document.getElementById('viewSellerContact');
       let sellerProfileImage = document.getElementById('sellerProfileImage');
       let selectSeller = document.getElementById('selectSeller');
+      let SellRecordTableBody = document.getElementById('SellRecordTableBody');
       let invoiceNumber = inputInvoiceNumber.value;
       btnRemSeller.classList.add('disabled');
      
@@ -2078,6 +2090,7 @@ JSON.stringifyIfObject = function stringifyIfObject(obj){
             btnSetSeller.style.display = 'block';
             selectSeller.removeAttribute('disabled');
             inputOpenModal.setAttribute('disabled','disabled');
+            SellRecordTableBody.innerHTML = '';
           }
           else
             makeToast('error',response.message);
