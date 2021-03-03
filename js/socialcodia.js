@@ -2188,11 +2188,19 @@ JSON.stringifyIfObject = function stringifyIfObject(obj){
           if (!response.error)
           {
             let sellers = response.sellers;
-            let sellerImage = 'src/img/user.png';
+            let sellerImage;
             sellers.forEach(setCategory);
             function setCategory(item, index) {
+              console.log(item);
               if (item.sellerImage!=null)
-                sellerImage = item.sellerImage;
+              {
+                  sellerImage = item.sellerImage;
+              }
+              else
+              {
+             sellerImage = 'src/img/user.png'; 
+              }
+              console.log(sellerImage)
               $('#selectSeller').select2().append($('<option value="'+item.sellerId+'" data-icon="'+sellerImage+'" data-address="'+item.sellerAddress+'" data-contact="'+item.sellerContactNumber+'">'+item.sellerFirstName+' '+item.sellerLastName+'</option>'));
               $('select').select2({width: "100%"});
             }

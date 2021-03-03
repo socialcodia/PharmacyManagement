@@ -58,7 +58,7 @@
                                     $color = 'red';
                                 echo "<tr>";
                                 echo "<td>$count</td>";
-                                echo "<td><img src='$image' class='circle' style='width:50px; border:2px solid red'/></td>";
+                                echo "<td><img src='$image' class='circle' style='width:50px; height:50px; border:2px solid red'/></td>";
                                 echo "<td class='blue-text darken-4'>$invoice->sellerName</td>";
                                 echo "<td style='font-weight:bold'>$invoice->invoiceNumber</td>";
                                 echo "<td class='blue-text darken-4 chip $color white-text' style='margin-top:25px;'>$invoice->invoiceStatus</td>";
